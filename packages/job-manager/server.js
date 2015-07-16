@@ -139,12 +139,26 @@ FS.JobManager.Queue = FS.JobManager.jobCollection.processJobs(
     });
   }
 );
+FS.JobManager.jobQueryRestriction = {};
+
 
 Meteor.startup(function(){
 
   FS.JobManager.jobCollection.startJobServer();
 
-  FS.JobManager.jobCollection.find({type: { $in: FS.JobManager._registeredJobTypes}, status: 'ready'}).observe({
+    var jobSelector = {
+      $and :[
+        {
+          type: {
+            $in: FS.JobManager._registeredJobTypes
+          },
+          status: 'ready'
+        },
+        FS.JobManager.jobQueryRestriction
+      ]
+    };
+
+    FS.JobManager.jobCollection.find(jobSelector).observe({
     added: function(doc) {
       FS.debug && console.log("New", doc.type, "job", doc._id, "observed - calling worker");
       FS.JobManager.Queue.trigger();
