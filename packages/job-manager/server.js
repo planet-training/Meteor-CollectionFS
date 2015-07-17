@@ -24,6 +24,9 @@ FS.JobManager.Config = {
   // A task will fail after 3 hours (Waiting for internal support https://github.com/vsivsi/meteor-job-collection/issues/86)
   autoFail: 10800000,
 
+  // A query that will restrict the jobs that will be handled by this node
+  jobQueryRestriction : {},
+
   // Number of workers that may be processing simultaneously
   concurrency: 2,
   // Number of jobs each worker is provided at one time. If > 1, job will be array
@@ -139,8 +142,6 @@ FS.JobManager.Queue = FS.JobManager.jobCollection.processJobs(
     });
   }
 );
-FS.JobManager.jobQueryRestriction = {};
-
 
 Meteor.startup(function(){
 
@@ -154,7 +155,7 @@ Meteor.startup(function(){
           },
           status: 'ready'
         },
-        FS.JobManager.jobQueryRestriction
+        FS.JobManager.Config.jobQueryRestriction
       ]
     };
 
