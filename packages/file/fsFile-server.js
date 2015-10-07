@@ -78,6 +78,7 @@ FS.File.prototype.failedPermanently = function(storeName) {
 FS.File.prototype.createReadStream = function(storeName) {
   var self = this;
 
+  console.trace('FS.File.createReadStream - %s',storeName);
   // If we dont have a store name but got Buffer data?
   if (!storeName && self.data) {
     FS.debug && console.log("fileObj.createReadStream creating read stream for attached data");

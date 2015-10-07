@@ -355,6 +355,7 @@ FS.TempStore.createWriteStream = function(fileObj, options) {
   */
 FS.TempStore.createReadStream = function(fileObj) {
   // Ensure that we have a storage adapter mounted; if not, throw an error.
+  console.trace('reading from temp store for file %s', fileObj._id);
   mountStorage();
 
   // If fileObj is not mounted or can't be, throw an error
