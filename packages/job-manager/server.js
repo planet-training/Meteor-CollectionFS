@@ -159,6 +159,7 @@ Meteor.startup(function(){
       ]
     };
 
+    console.log("Job Query", jobSelector);
     FS.JobManager.jobCollection.find(jobSelector).observe({
     added: function(doc) {
       FS.debug && console.log("New", doc.type, "job", doc._id, "observed - calling worker");
