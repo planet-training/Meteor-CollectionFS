@@ -355,13 +355,13 @@ FS.TempStore.createWriteStream = function(fileObj, options) {
   */
 FS.TempStore.createReadStream = function(fileObj) {
   // Ensure that we have a storage adapter mounted; if not, throw an error.
-  console.trace('reading from temp store for file %s', fileObj._id);
+  console.trace('reading from temp store for file %s', fileObj);
   mountStorage();
 
   // If fileObj is not mounted or can't be, throw an error
   mountFile(fileObj, 'FS.TempStore.createReadStream');
 
-  FS.debug && console.log('FS.TempStore creating read stream for ' + fileObj._id);
+  FS.debug && console.log('FS.TempStore creating read stream for ' + fileObj);
 
   // Determine how many total chunks there are from the tracker collection
   var chunkInfo = tracker.findOne({fileId: fileObj._id, collectionName: fileObj.collectionName}) || {};
