@@ -21,7 +21,7 @@ FS.StorageAdapter = function(storeName, options, api) {
   if (typeof api === 'undefined') {
     throw new Error('FS.StorageAdapter please define an api');
   }
-  
+
   FS.Utility.each('fileKey,remove,typeName,createReadStream,createWriteStream'.split(','), function(name) {
     if (typeof api[name] === 'undefined') {
       throw new Error('FS.StorageAdapter please define an api. "' + name + '" ' + (api.typeName || ''));
@@ -71,7 +71,7 @@ FS.StorageAdapter = function(storeName, options, api) {
 
   // Return readable stream for fileKey
   self.adapter.createReadStreamForFileKey = function(fileKey, options) {
-    if (FS.debug) console.log('createReadStreamForFileKey ' + storeName);
+    if (FS.debug) console.trace('createReadStreamForFileKey store: ' + storeName+' , fileKey: '+fileKey);
     return FS.Utility.safeStream( api.createReadStream(fileKey, options) );
   };
 
@@ -122,7 +122,7 @@ FS.StorageAdapter = function(storeName, options, api) {
   // Return writeable stream for fileObj
   self.adapter.createWriteStream = function(fileObj, options) {
     if (FS.debug) console.log('createWriteStream ' + storeName + ', internal: ' + !!self.internal);
-    
+
     if (self.internal) {
       // Internal stores take a fileKey
       return self.adapter.createWriteStreamForFileKey(fileObj, options);
