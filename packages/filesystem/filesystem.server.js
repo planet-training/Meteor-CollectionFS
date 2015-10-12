@@ -51,6 +51,11 @@ FS.Store.FileSystem = function(name, options) {
       // If no store key found we resolve / generate a key
       return fileObj.collectionName + '-' + fileObj._id + '-' + (filenameInStore || filename);
     },
+    exists: function(fileKey) {
+
+      var filepath = path.join(absolutePath, fileKey);
+      return path.existsSync(filepath);
+    },
     createReadStream: function(fileKey, options) {
       // this is the Storage adapter scope
       var filepath = path.join(absolutePath, fileKey);
